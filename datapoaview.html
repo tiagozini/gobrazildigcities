@@ -1,0 +1,16 @@
+  <table border='1'><tr>
+  {{range .Result.Fields}} <td>{{.Id}}</td> {{end}}
+  </tr>
+  {{range .Result.Records}} <tr>
+     <td>{{.Id}}</td>
+     <td>{{.Escola}}</td>
+     <td>-</td>
+     <td>-</td>
+     <td>-</td>
+     <td>{{.Bairro}}</td>
+     <td>{{.Cep}}</td>
+     <td>{{.Ddd}}</td>
+     <td>{{.Telefone}}</td>
+     <td>{{.Email}}</td></tr> {{end}}
+  </table>
+  <table>
