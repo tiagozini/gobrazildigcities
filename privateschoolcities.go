@@ -24,14 +24,14 @@ type DatapoaResultFields struct {
 type DatapoaResultRecords struct {
     Numero string
     Bairro string
-    //Endereco string
+    Endereco string
     Ddd string
     Escola string
     Telefone string
     Cep string
     Id int64
     Email string
-    //Localizacao string
+    Localizacao string
 }
 
 
@@ -117,17 +117,17 @@ func getEscolasParticulares() (DatapoaMessage, error) {
 }
 
 func formatEntidates(b []byte) ([]byte) {
-  b = bytes.Replace(b, []byte("\"N\u00daMERO\""),[]byte("\"numero\""), -1)
-  b = bytes.Replace(b, []byte("\"BAIRRO\""),[]byte("\"bairro\""),  -1)
-  //b = bytes.Replace(b, []byte("\"ENDERE\u00c7O\""),[]byte("\"endereco\""),-1)
-  b = bytes.Replace(b, []byte("\"DDD\""),[]byte("\"ddd\""), -1)
-  b = bytes.Replace(b, []byte("\"ESCOLA\""),[]byte("\"escola\""), -1)
-  b = bytes.Replace(b, []byte("\"TELEFONE\""),[]byte("\"telefone\""), -1)
-  b = bytes.Replace(b, []byte("\"CEP\""),[]byte("\"cep\""),-1)
-  b = bytes.Replace(b, []byte("\"_id\""),[]byte("\"id\""), -1)
-  b = bytes.Replace(b, []byte("\"EMAIL\""),[]byte("\"email\""), -1)
-  //b = bytes.Replace(b, []byte("\"LOCALIZA\u00c7\u00c3O\""),[]byte("\"localizacao\""), -1)
-  //b = bytes.Replace(b, []byte("\"_links\""),[]byte("\"links\""), -1)
+  b = bytes.Replace(b, []byte("\"N\\u00daMERO\":"),[]byte("\"numero\":"), -1)
+  b = bytes.Replace(b, []byte("\"BAIRRO\":"),[]byte("\"bairro\":"),  -1)
+  b = bytes.Replace(b, []byte("\"ENDERE\\u00c7O\":"),[]byte("\"endereco\":"),-1)
+  b = bytes.Replace(b, []byte("\"DDD\":"),[]byte("\"ddd\":"), -1)
+  b = bytes.Replace(b, []byte("\"ESCOLA\":"),[]byte("\"escola\":"), -1)
+  b = bytes.Replace(b, []byte("\"TELEFONE\":"),[]byte("\"telefone\":"), -1)
+  b = bytes.Replace(b, []byte("\"CEP\":"),[]byte("\"cep\":"),-1)
+  b = bytes.Replace(b, []byte("\"_id\":"),[]byte("\"id\":"), -1)
+  b = bytes.Replace(b, []byte("\"EMAIL\":"),[]byte("\"email\":"), -1)
+  b = bytes.Replace(b, []byte("\"LOCALIZA\\u00c7\\u00c3O\":"),[]byte("\"localizacao\":"), -1)
+  b = bytes.Replace(b, []byte("\"_links\":"),[]byte("\"links\":"), -1)
   fmt.Printf("%s", b)
   return b
 }
