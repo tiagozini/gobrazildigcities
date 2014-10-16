@@ -6,7 +6,6 @@ import (
   "net/http"
   "html/template"
   "regexp"
-  "errors"
   "flag"
   "encoding/json"
   "bytes"
@@ -58,7 +57,7 @@ type DatapoaMessage struct {
 
 var templates = template.Must(template.ParseFiles("datapoaview.html"))
 
-var validPath = regexp.MustCompile("^/(datapoaview)$")
+var validPath = regexp.MustCompile("^/(datapoaview)?/$")
 
 func loadPage(title string) (*Page, error) {
     filename := title + ".txt"
@@ -69,7 +68,7 @@ func loadPage(title string) (*Page, error) {
     return &Page{Title: title, Body: body}, nil
 }
 
-func datapoaviewHandler(w http.ResponseWriter, r *http.Request, title string) {
+func datapoaviewHandler(w http.ResponseWriter, r *http.Request) {
     datapoaMessage, _ := getEscolasParticulares()
     err := templates.ExecuteTemplate(w, "datapoaview.html", &datapoaMessage)
     if err != nil {
@@ -77,13 +76,16 @@ func datapoaviewHandler(w http.ResponseWriter, r *http.Request, title string) {
     }
 }
 
-func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
+func makeHandler(fn func(http.ResponseWriter, *http.Request)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
+        fmt.Print(r.URL.Path)
         if m == nil {
+            fmt.Print("Holy shit")
             http.NotFound(w, r)
             return
         }
+        fmt.Print("Hi crasy folks")
         fn(w, r)
     }
 }
@@ -99,15 +101,6 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
-}
-
-func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
-    m := validPath.FindStringSubmatch(r.URL.Path)
-    if m == nil {
-        http.NotFound(w, r)
-        return "", errors.New("Invalid Page Title")
-    }
-    return nil // The title is the second subexpression.
 }
 
 func getEscolasParticulares() (DatapoaMessage, error) {
